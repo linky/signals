@@ -9,7 +9,6 @@
 #define SIGNALS_SLOT_HPP_
 
 #include "signal.hpp"
-#include "terminator.hpp"
 
 namespace signals {
 
@@ -17,7 +16,6 @@ template <typename Ret, typename ...Args>
 class CSlot {
 protected:
     using ConnectedSignal = CSignal<Ret, Args...>;
-    using Terminator = terminator<Ret, Args...>;
 
 public:
     CSlot();
@@ -28,14 +26,12 @@ public:
     Ret emit(Args... _args);
 
 protected:
-    Terminator      m_terminator;
     ConnectedSignal m_connected_signal;
 };
 
 template <typename Ret, typename ...Args>
 CSlot<Ret, Args...>::CSlot()
-    : m_terminator()
-    , m_connected_signal(make_signal(&m_terminator, &terminator<Ret, Args...>::wrap_call))
+    : m_connected_signal(nullptr)
 {}
 
 template <typename Ret, typename ...Args>
