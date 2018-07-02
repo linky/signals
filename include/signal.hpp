@@ -49,6 +49,6 @@ decltype(auto) make_signal(Ret(*_invoked_function)(Args...)) {
     return CSignal<Ret, Args...>(_invoked_function);
 }
 
-}
+} // signals
 
 #endif  // SIGNALS_SIGNAL_HPP_

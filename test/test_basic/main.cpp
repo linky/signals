@@ -11,14 +11,14 @@
 
 class Event {
 public:
-    Event() {
-        std::cout << "Event created\n";
-    }
+    Event() = default;
 };
 
 class Handler {
 public:
-    void handleEvent(Event _event) {}
+    void handleEvent(Event _event) {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+    }
 };
 
 int main() {
@@ -26,6 +26,7 @@ int main() {
 
     Handler handler;
     signals::CSlot<void, Event> slot;
+    slot.connect(signals::make_signal(&handler, &Handler::handleEvent));
     slot.connect(signals::make_signal(&handler, &Handler::handleEvent));
     slot.emit(Event());
 
