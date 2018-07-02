@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 set(SIGNALS_INC
+        ../../include/signals.h
         ../../include/slot.hpp
         ../../include/signal.hpp)
 

@@ -12,8 +12,12 @@
 
 namespace signals {
 
+/**
+ * @return The library version in string representation
+ */
+
 const char* version();
 
-}
+} // signals
 
 #endif  // SIGNALS_SIGNALS_H_
