@@ -9,23 +9,19 @@
 
 #include "signals.h"
 
-class Event {
-public:
-    Event() = default;
-};
+class Event {};
 
 class Handler {
 public:
-    void handleEvent(Event _event) {
+    void handleEvent(const Event& /*_event*/) {
         std::cout << __PRETTY_FUNCTION__ << std::endl;
     }
 };
 
 int main() {
-    std::cout << "Library version: " << signals::version() << std::endl;
-
     Handler handler;
-    signals::CSlot<void, Event> slot;
+
+    signals::CSlot<void, const Event&> slot;
     slot.connect(signals::make_signal(&handler, &Handler::handleEvent));
     slot.connect(signals::make_signal(&handler, &Handler::handleEvent));
     slot.emit(Event());
