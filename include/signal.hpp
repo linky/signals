@@ -21,7 +21,7 @@ public:
     explicit CSignal(InvokedFunction _callee);
 
 public:
-    Ret call(Args... _args);
+    Ret call(Args... _args) const;
 
 protected:
     InvokedFunction m_invoked_function;
@@ -33,14 +33,14 @@ CSignal<Ret, Args...>::CSignal(InvokedFunction _callee)
 {}
 
 template <typename Ret, typename ...Args>
-Ret CSignal<Ret, Args...>::call(Args... _args) {
+Ret CSignal<Ret, Args...>::call(Args... _args) const {
     return m_invoked_function(_args...);
 }
 
 template <typename Ret, typename Type, typename ...Args>
-decltype(auto) make_signal(Type* _object, Ret(Type::*_invoked_method)(Args...)) {
-    return CSignal<Ret, Args...>([=](Args... _args) {
-        return (_object->*_invoked_method)(_args...);
+decltype(auto) make_signal(Type& _object, Ret(Type::*_invoked_method)(Args...)) {
+    return CSignal<Ret, Args...>([&](Args... _args) {
+        return (_object.*_invoked_method)(_args...);
     });
 }
 

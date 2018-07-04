@@ -26,8 +26,8 @@ int main() {
 
     Handler handler;
     signals::CSlot<void, Event> slot;
-    slot.connect(signals::make_signal(&handler, &Handler::handleEvent));
-    slot.connect(signals::make_signal(&handler, &Handler::handleEvent));
+    slot.connect(signals::make_signal(handler, &Handler::handleEvent));
+    slot.connect(signals::make_signal(handler, &Handler::handleEvent));
     slot.emit(Event());
 
     return 0;

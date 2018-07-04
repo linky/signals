@@ -26,8 +26,8 @@ public:
     CSlot();
 
 public:
-    void connect(Signal _signal);
-    void emit(Args... _args);
+    void connect(const Signal& _signal);
+    void emit(Args... _args) const;
 
 protected:
     Signals m_connected_signals;
@@ -39,14 +39,14 @@ CSlot<Ret, Args...>::CSlot()
 {}
 
 template <typename Ret, typename ...Args>
-void CSlot<Ret, Args...>::connect(Signal _signal) {
+void CSlot<Ret, Args...>::connect(const Signal& _signal) {
     m_connected_signals.push_back(_signal);
 }
 
 template <typename Ret, typename ...Args>
-void CSlot<Ret, Args...>::emit(Args... _args) {
-    for (typename Signals::size_type i = 0; i < m_connected_signals.size(); ++i)
-        m_connected_signals[i].call(_args...);
+void CSlot<Ret, Args...>::emit(Args... _args) const {
+    for (const auto& connected_signal : m_connected_signals)
+        connected_signal.call(_args...);
 }
 
 } // signals
